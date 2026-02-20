@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Media Downloader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <div class="container">
+        <h1>Media Downloader</h1>
+        <p>Paste your video link below:</p>
+        
+        <div class="input-group">
+            <input type="text" id="videoUrl" placeholder="https://example.com/video..." required>
+            <button id="downloadBtn" onclick="downloadVideo()">Download</button>
+        </div>
+
+        <div id="loadingSpinner" class="spinner hidden"></div>
+
+        <p id="statusMessage"></p>
+    </div>
+
+            <script>
+        function downloadVideo() {
+            const url = document.getElementById('videoUrl').value;
+            const status = document.getElementById('statusMessage');
+            const spinner = document.getElementById('loadingSpinner');
+            const button = document.getElementById('downloadBtn');
+            
+            if (!url) {
+                status.innerText = "Please enter a valid URL!";
+                status.style.color = "red";
+                return;
+            }
+
+            // 1. Show the spinner and disable the button
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+            button.style.backgroundColor = "#ccc"; 
+
+            // 2. Update the status text
+            status.innerText = "Contacting server... please wait.";
+            status.style.color = "#333";
+
+            // 3. Trigger the download
+            window.location.href = `http://localhost:3000/download?url=${encodeURIComponent(url)}`;
+
+            // 4. Reset the UI after 5 seconds
+            setTimeout(() => {
+                spinner.classList.add('hidden');
+                button.disabled = false;
+                button.style.backgroundColor = "#007bff";
+                status.innerText = "Check your browser's download manager!";
+                status.style.color = "green";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
+

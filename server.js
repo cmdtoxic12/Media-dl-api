@@ -3,7 +3,9 @@ const cors = require('cors');
 const youtubedl = require('youtube-dl-exec');
 
 const app = express();
-const PORT = 3000;
+// This tells the app to use Render's port, or default to 3000 if testing locally
+const PORT = process.env.PORT || 3000; 
+
 
 app.use(cors());
 
